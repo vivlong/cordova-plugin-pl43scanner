@@ -1,19 +1,38 @@
-var exec = require('cordova/exec');  
-module.exports = {  
-  
-    /** 
-     * 一共5个参数 
-       第一个 :成功回调 
-       第二个 :失败回调 
-       第三个 :将要调用的类的配置名字(在config.xml中配置 稍后在下面会讲解) 
-       第四个 :调用的方法名(一个类里可能有多个方法 靠这个参数区分) 
-       第五个 :传递的参数  以json的格式 
-     */  
-    scan: function(mills,callback,err) {  
-        exec(function(winParam){  
-            callback(winParam);  
-        }, function(errParam){  
-            err(errParam);  
-        }, "pl43scanner", "scan", [mills]);  
-    }
+var exec = require('cordova/exec');
+
+function PL43Scanner() {
+    this.Encode = {
+        TEXT_TYPE: "TEXT_TYPE",
+        EMAIL_TYPE: "EMAIL_TYPE",
+        PHONE_TYPE: "PHONE_TYPE",
+        SMS_TYPE: "SMS_TYPE"
+    };
 };
+
+PL43Scanner.prototype.scan = function (successCallback, errorCallback, config) {
+    if (config instanceof Array) {
+        // do nothing
+    } else {
+        if (typeof (config) === 'object') {
+            config = [config];
+        } else {
+            config = [];
+        }
+    }
+    if (errorCallback == null) {
+        errorCallback = function () {
+        };
+    }
+    if (typeof errorCallback != "function") {
+        console.log("PL43Scanner.scan failure: failure parameter not a function");
+        return;
+    }
+    if (typeof successCallback != "function") {
+        console.log("PL43Scanner.scan failure: success callback parameter must be a function");
+        return;
+    }
+    exec(successCallback, errorCallback, 'PL43Scanner', 'scan', config);
+};
+
+var pl43scanner = new PL43Scanner();
+module.exports = pl43scanner;
