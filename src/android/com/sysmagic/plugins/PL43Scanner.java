@@ -8,10 +8,10 @@ import android.util.Log;
 import android.content.Intent;
 
 public class PL43Scanner extends CordovaPlugin {
-	
-    public static final int REQUEST_CODE = 0x0ba7c0de;	
+
+    public static final int REQUEST_CODE = 0x0ba7c0de;
     private static final String SCAN = "scan";
-    private static final String SCAN_INTENT = "com.sysmagic.mob.SCAN";
+    private static final String SCAN_INTENT = "com.sysmagic.plugins.SCAN";
 	private CallbackContext callbackContext;
 
 	public PL43Scanner() {
@@ -46,10 +46,8 @@ public class PL43Scanner extends CordovaPlugin {
             Log.e("PL43Scanner", "call onActivityResult");
             if (resultCode == Activity.RESULT_OK) {
                 this.callbackContext.success("");
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                this.callbackContext.success("");
             } else {
-                this.callbackContext.error("Unexpected error");
+                this.callbackContext.error("Try Scan Again.");
             }
 		}
 	}

@@ -16,12 +16,27 @@
 	</js-module>
 	<!-- android -->
 	<platform name="android">
-    <source-file src="src/android/com/sysmagic/plugins/PL43Scanner.java" target-dir="src/com/sysmagic/plugins" />
+		<source-file src="src/android/com/sysmagic/plugins/PL43Scanner.java" target-dir="src/com/sysmagic/plugins" />
 
-    <config-file target="res/xml/config.xml" parent="/*">
+		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="PL43Scanner">
 				<param name="android-package" value="com.sysmagic.plugins.PL43Scanner"/>
 			</feature>
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity
+			android:clearTaskOnLaunch="true"
+			android:configChanges="orientation|keyboardHidden"
+			android:exported="false"
+			android:name="com.sysmagic.plugins.ScanActivity"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar"
+			android:windowSoftInputMode="stateAlwaysHidden">
+				<intent-filter>
+					<action android:name="com.sysmagic.plugins.SCAN" />
+					<category android:name="android.intent.category.DEFAULT" />
+				</intent-filter>
+			</activity>
+			<service android:name="com.sysmagic.plugins.ScanService" />
 		</config-file>
 	</platform>
 </plugin>
