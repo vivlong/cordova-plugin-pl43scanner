@@ -20,8 +20,7 @@ public class PL43Scanner extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
 		this.callbackContext = callbackContext;
-        Log.e("PL43Scanner", "call execute");		
-		if (action.equals(SCAN)) {			
+		if (action.equals(SCAN)) {
             scan(args);
 		} else {
             return false;
@@ -43,10 +42,11 @@ public class PL43Scanner extends CordovaPlugin {
 	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_CODE) {
-            Log.e("PL43Scanner", "call onActivityResult");
             if (resultCode == Activity.RESULT_OK) {
-                this.callbackContext.success("");
+                Log.e("PL43Scanner", "call RESULT_OK");
+                this.callbackContext.success(intent.getStringExtra("barcode"));
             } else {
+                Log.e("PL43Scanner", "call RESULT_ERROR");
                 this.callbackContext.error("Try Scan Again.");
             }
 		}

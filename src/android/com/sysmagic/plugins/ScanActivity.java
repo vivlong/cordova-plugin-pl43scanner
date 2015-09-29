@@ -17,6 +17,7 @@ public class ScanActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+        instance = this;
         Intent ac = new Intent();
         ac.setAction("com.sysmagic.plugins.ScanService");
         ac.putExtra("activity", activity);
@@ -26,9 +27,13 @@ public class ScanActivity extends Activity {
         sendToservice.putExtra("cmd", cmd);
         this.startService(sendToservice);
         Log.e(TAG, "send to ScanService");
+        //finish();
+    }
+
+    public void setBarCode(String barcode){
+        Log.e(TAG, "set BarCode to return");
         Intent intent = new Intent();
-        intent.putExtra("barcode","");
+        intent.putExtra("barcode", barcode);
         setResult(RESULT_OK, intent);
-        finish();
     }
 }
